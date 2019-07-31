@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -83,19 +84,11 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="statistics.html">Statistics based methods</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Parametrics methods</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#absolute">Absolute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#absolute">Absolute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hysteresis">Hysteresis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#slope">Slope</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#class-independent">Class independent</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#class-dependent">Class dependent</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#hysteresis">Hysteresis</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Class independent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">Class dependent</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#slope">Slope</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">Class independent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">Class dependent</a></li>
 </ul>
 </li>
 </ul>
@@ -173,31 +166,42 @@
             
   <div class="section" id="parametrics-methods">
 <h1>Parametrics methods<a class="headerlink" href="#parametrics-methods" title="Permalink to this headline">¶</a></h1>
+<p>The parametric methods require optimization and can be either class-independent or class-dependent.
+Three methods are tested and describe bellow.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><cite>optimization</cite> for a description of the different optimization algorithm than can be used</p>
+</div>
+<p>A segment is composed of continuous valid probabilities. In most cases, segments will
+have a minimum size and a minimum interval. A segment smaller than the minimum segment size will be withdrawn.
+If an interval in between two segments is smaller than the minimum interval size, the two segments are merged
+together.</p>
 <div class="section" id="absolute">
 <h2>Absolute<a class="headerlink" href="#absolute" title="Permalink to this headline">¶</a></h2>
+<p>Absolute thresholding refers to directly applying a unique and arbitrary threshold to the temporal predictions
+without using their statistics. This naive approach still yields exploitable results that can get close to the
+best ones in some cases. It is also the approach with the shortest optimization time due to the unique parameter
+to optimize.</p>
+<p>Every probability above this threshold will count as a valid part of the segment.</p>
+<p>For the class-dependent variant of the method, each class have their own threshold.</p>
+<img alt="_images/3_threshold.svg" src="_images/3_threshold.svg" /></div>
+<div class="section" id="hysteresis">
+<h2>Hysteresis<a class="headerlink" href="#hysteresis" title="Permalink to this headline">¶</a></h2>
+<p>The hysteresis threshold is used in many fields, such as finance, imaging, electronics, etc…
+It is a simple method to implement and has proven itself many times over. This method is based on two thresholds.
+One is used to determine the beginning of a segment and the other (smaller) its end.</p>
+<p>This algorithm is used when probabilities are unstable and changing at a high pace. It should, therefore,
+decrease the number of events detected by the algorithm and reduce the insertion and deletion rates, giving
+a better error rate than the Absolute threshold approach.</p>
+<p>For the class-dependent variant of the method, each class have their own couple of hystersis thresholds.</p>
+<img alt="_images/3_hysteresis.svg" src="_images/3_hysteresis.svg" /></div>
+<div class="section" id="slope">
+<h2>Slope<a class="headerlink" href="#slope" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="class-independent">
 <h3>Class independent<a class="headerlink" href="#class-independent" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="class-dependent">
 <h3>Class dependent<a class="headerlink" href="#class-dependent" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="hysteresis">
-<h2>Hysteresis<a class="headerlink" href="#hysteresis" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
-<h3>Class independent<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="id2">
-<h3>Class dependent<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="slope">
-<h2>Slope<a class="headerlink" href="#slope" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id3">
-<h3>Class independent<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="id4">
-<h3>Class dependent<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 </div>
